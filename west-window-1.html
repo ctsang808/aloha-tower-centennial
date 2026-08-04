@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — Mauliola</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="west-balcony.html" aria-label="Back to West Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <a class="nav-btn back-btn-overlay" href="west-balcony.html">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Go Back
+    </a>
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/west-window-1-panorama.jpg" alt="View toward Mauliola">
+        <button class="learn-more" style="top:305px; left:215px;" onclick="openCard('mauliola-1-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Mauliola">
+        </button>
+        <button class="learn-more" style="top:287px; left:620px;" onclick="openCard('mauliola-2-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Mauliola">
+        </button>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">Mauliola</h1>
+  </div>
+
+</div>
+
+<!-- Mauliola - Part I card -->
+<div class="modal-overlay" id="mauliola-1-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/west-window-1-card-1.jpg" alt="Historic maps of Mauliola / Sand Island">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Mauliola - Part I</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">Previously a small reef known to Native Hawaiians as Kahakaʻaulana, the Sand Island we know today was once called Mauliola by King Kamehameha V. Over the years, sediment from small dredging projects were dumped onto the reef, creating Quarantine Island, which was used to quarantine ships and people with contagious diseases.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi Department of Transportation</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('mauliola-1-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<!-- Mauliola - Part II card -->
+<div class="modal-overlay" id="mauliola-2-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/west-window-1-card-2.jpg" alt="Historic photo of a Quarantine Island structure">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Mauliola - Part II</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">The second picture depicts one of the structures on Quarantine Island, used to house newly arrived immigrants during mandatory isolation. Because Native Hawaiians were especially vulnerable to foreign diseases, quarantining newcomers was a crucial step in preventing the spread of illness to the native population.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('mauliola-2-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+  // Re-sync the Learn More pulse animations. A tap pauses that one
+  // icon mid-cycle (see .learn-more:active in style.css), and on touch
+  // devices the paused state can outlast the tap while a card is open.
+  // When it resumes it continues from where it paused rather than
+  // jumping back in phase, so icons drift out of sync over time.
+  // Restarting the animation on every icon after a card closes keeps
+  // them all ticking together.
+  function resyncPulses() {
+    document.querySelectorAll('.learn-more img').forEach(function (img) {
+      img.style.animation = 'none';
+      void img.offsetHeight; // force reflow so the restart actually takes
+      img.style.animation = '';
+    });
+  }
+
+  function openCard(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCard(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+    resyncPulses();
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeCard(overlay.id);
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — Sand Island</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="west-balcony.html" aria-label="Back to West Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <a class="nav-btn back-btn-overlay" href="west-balcony.html">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Go Back
+    </a>
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/west-window-2-panorama.jpg" alt="View toward Sand Island">
+        <button class="learn-more" style="top:287px; left:214px;" onclick="openCard('sand-island-1-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Sand Island">
+        </button>
+        <button class="learn-more" style="top:287px; left:621px;" onclick="openCard('sand-island-2-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Sand Island">
+        </button>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">Sand Island</h1>
+  </div>
+
+</div>
+
+<!-- Sand Island - Part I card -->
+<div class="modal-overlay" id="sand-island-1-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/west-window-2-card-1.jpg" alt="Historic photo of the Sand Island internment camp">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Sand Island - Part I</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">After the dredging of Honolulu Harbor's Fort Armstrong Entrance Channel, the island's name was officially changed to Sand Island. The 1941 World War II bombing of Pearl Harbor prompted the use of Sand Island as an internment camp for Japanese Americans.</p>
+        <p class="card-caption">Photo credit: Tokioka Heritage Resource Center at the Japanese Cultural Center of Hawaiʻi</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('sand-island-1-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<!-- Sand Island - Part II card -->
+<div class="modal-overlay" id="sand-island-2-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/west-window-2-card-2.jpg" alt="Aerial historic photo of Sand Island">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Sand Island - Part II</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">After the war, Sand Island fell into neglect, used by the State as a dumping ground. In the years that followed, a group of Native Hawaiians began restoring the land and established a fishing village rooted in traditional Hawaiian practices. However, the State later labeled the settlement a "squatters' camp" and reclaimed the area for redevelopment, transforming it into what is now a recreational park, industrial zone, and Coast Guard base.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('sand-island-2-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+  // Re-sync the Learn More pulse animations. A tap pauses that one
+  // icon mid-cycle (see .learn-more:active in style.css), and on touch
+  // devices the paused state can outlast the tap while a card is open.
+  // When it resumes it continues from where it paused rather than
+  // jumping back in phase, so icons drift out of sync over time.
+  // Restarting the animation on every icon after a card closes keeps
+  // them all ticking together.
+  function resyncPulses() {
+    document.querySelectorAll('.learn-more img').forEach(function (img) {
+      img.style.animation = 'none';
+      void img.offsetHeight; // force reflow so the restart actually takes
+      img.style.animation = '';
+    });
+  }
+
+  function openCard(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCard(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+    resyncPulses();
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeCard(overlay.id);
+    });
+  });
+</script>
+
+</body>
+</html>

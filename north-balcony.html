@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — North Lānai</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="north-balcony.html" aria-label="Back to North Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/north-balcony-panorama.jpg" alt="View from North Lānai balcony">
+        <a class="learn-more" style="top:139px; left:307px;" href="north-window-1.html">
+          <img src="images/icon-learn-more.png" alt="Learn more">
+        </a>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">North Lānai</h1>
+    <div class="nav-row">
+      <a class="nav-btn left" href="west-balcony.html">
+        <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        West Lānai
+      </a>
+      <a class="nav-btn right" href="east-balcony.html">
+        East Lānai
+        <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Start the panorama centered so visitors can discover it swipes both ways
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+</script>
+
+</body>
+</html>

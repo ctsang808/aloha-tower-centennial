@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — Ward Village &amp; Kaka'ako</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="south-balcony.html" aria-label="Back to South Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <a class="nav-btn back-btn-overlay" href="south-balcony.html">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Go Back
+    </a>
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/south-window-1-panorama.jpg" alt="View toward Ward Village and Kaka'ako">
+        <button class="learn-more" style="top:212px; left:457px;" onclick="openCard('ward-village-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Ward Village">
+        </button>
+        <button class="learn-more" style="top:266px; left:658px;" onclick="openCard('kakaako-1-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Kaka'ako">
+        </button>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">Ward Village &amp; Kaka'ako</h1>
+  </div>
+
+</div>
+
+<!-- Ward Village card (Mauliola I) -->
+<div class="modal-overlay" id="ward-village-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/south-window-1-card-1.jpg" alt="Historic photo of Ward Village">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Ward Village</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">Ward Village traces its roots to the Victoria Ward estate—home to a Hawaiian aliʻi wahine who championed traditional arts, music, and culture in the late 19th century. Since 2010, the area has been evolving into a thoughtfully designed, sustainable neighborhood, blending world-class architecture with local values through community parks, public art, and spaces for both small businesses and residents of Hawaiʻi.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('ward-village-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<!-- Kaka'ako - Part I card (Mauliola II) -->
+<div class="modal-overlay" id="kakaako-1-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/south-window-1-card-2.jpg" alt="Historic photo of Kaka'ako">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Kaka'ako - Part I</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">Once a landscape of wetlands and fishponds, early Kakaʻako was home to small farmers and salt producers before the land was filled using dredged material from nearby harbors. This transformation, intended to address public health concerns, displaced agricultural communities and marked the beginning of urban and industrial development.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('kakaako-1-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+  // Re-sync the Learn More pulse animations. A tap pauses that one
+  // icon mid-cycle (see .learn-more:active in style.css), and on touch
+  // devices the paused state can outlast the tap while a card is open.
+  // When it resumes it continues from where it paused rather than
+  // jumping back in phase, so icons drift out of sync over time.
+  // Restarting the animation on every icon after a card closes keeps
+  // them all ticking together.
+  function resyncPulses() {
+    document.querySelectorAll('.learn-more img').forEach(function (img) {
+      img.style.animation = 'none';
+      void img.offsetHeight; // force reflow so the restart actually takes
+      img.style.animation = '';
+    });
+  }
+
+  function openCard(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCard(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+    resyncPulses();
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeCard(overlay.id);
+    });
+  });
+</script>
+
+</body>
+</html>

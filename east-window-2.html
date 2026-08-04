@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — Bishop Street</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="east-balcony.html" aria-label="Back to East Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <a class="nav-btn back-btn-overlay" href="east-balcony.html">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Go Back
+    </a>
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/east-window-2-panorama.jpg" alt="View toward Bishop Street">
+        <button class="learn-more" style="top:245px; left:508px;" onclick="openCard('hackfeld-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about H. Hackfeld and Co.">
+        </button>
+        <button class="learn-more" style="top:344px; left:686px;" onclick="openCard('dillingham-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Dillingham Transportation Building">
+        </button>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">Bishop Street</h1>
+  </div>
+
+</div>
+
+<!-- H. Hackfeld and Co. card (Sand Island I) -->
+<div class="modal-overlay" id="hackfeld-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/east-window-2-card-1.jpg" alt="Historic photo of H. Hackfeld and Co.">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">H. Hackfeld and Co.</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">The Topa Towers trace their origins to the former H. Hackfeld & Co. building and the old government courthouse it acquired in 1874. Following World War I, the German-owned company rebranded as the patriotic American Factors, Ltd., later shortened to Amfac. By 1970, both buildings were demolished. To honor H. Hackfeld & Co.'s legacy, the original iron gate and coral blocks from the courthouse were preserved and placed in Walker Park as historical artifacts.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('hackfeld-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<!-- Dillingham Transportation Building card (Sand Island II) -->
+<div class="modal-overlay" id="dillingham-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/east-window-2-card-2.jpg" alt="Historic photo of Dillingham Transportation Building">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Dillingham Transportation Building</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">Home to popular eateries, the Dillingham Transportation Center stands as a historic landmark on the edge of Downtown. Built in 1930, it was the first major commercial building in the area designed specifically for tenant use. During World War II, it also served as the FBI's field office, where agent Robert L. Shivers interviewed Japanese residents, which helped to prevent a mass internment like those seen on the mainland.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('dillingham-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+  // Re-sync the Learn More pulse animations. A tap pauses that one
+  // icon mid-cycle (see .learn-more:active in style.css), and on touch
+  // devices the paused state can outlast the tap while a card is open.
+  // When it resumes it continues from where it paused rather than
+  // jumping back in phase, so icons drift out of sync over time.
+  // Restarting the animation on every icon after a card closes keeps
+  // them all ticking together.
+  function resyncPulses() {
+    document.querySelectorAll('.learn-more img').forEach(function (img) {
+      img.style.animation = 'none';
+      void img.offsetHeight; // force reflow so the restart actually takes
+      img.style.animation = '';
+    });
+  }
+
+  function openCard(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCard(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+    resyncPulses();
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeCard(overlay.id);
+    });
+  });
+</script>
+
+</body>
+</html>

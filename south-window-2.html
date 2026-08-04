@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — Kaka'ako &amp; Fort Armstrong</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="south-balcony.html" aria-label="Back to South Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <a class="nav-btn back-btn-overlay" href="south-balcony.html">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Go Back
+    </a>
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/south-window-2-panorama.jpg" alt="View toward Kaka'ako and Fort Armstrong">
+        <button class="learn-more" style="top:293px; left:37px;" onclick="openCard('kakaako-2-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Kaka'ako">
+        </button>
+        <button class="learn-more" style="top:329px; left:586px;" onclick="openCard('fort-armstrong-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Fort Armstrong">
+        </button>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">Kaka'ako &amp; Fort Armstrong</h1>
+  </div>
+
+</div>
+
+<!-- Kaka'ako - Part II card -->
+<div class="modal-overlay" id="kakaako-2-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/south-window-2-card-1.jpg" alt="Historic photo of Kaka'ako">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Kaka'ako - Part II</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">By the mid-1900s, Kakaʻako had become an industrial zone, filled with warehouses and factories rooted in its past as Honolulu's dumping ground. Despite the industrialization, the area retained the legacy of displaced immigrant communities and fishponds—some honored today in building names and the SALT complex, referencing the once-thriving salt flats of the region.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('kakaako-2-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<!-- Fort Armstrong card -->
+<div class="modal-overlay" id="fort-armstrong-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/south-window-2-card-2.jpg" alt="Historic photo of Fort Armstrong">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Fort Armstrong</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">Built in 1907 atop the filled-in Kaʻākaukukui reef, Fort Armstrong marked the militarization of a once-thriving landscape of fishponds, salt flats, and marshland. Established after Hawaiʻi's annexation, the fort symbolized U.S. control over the area until 1951, when President Truman returned the land to the Territory of Hawaiʻi. The name "Kaʻākaukukui," meaning "the right (or north) light," reflects the deep cultural roots that predated this transformation.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('fort-armstrong-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+  // Re-sync the Learn More pulse animations. A tap pauses that one
+  // icon mid-cycle (see .learn-more:active in style.css), and on touch
+  // devices the paused state can outlast the tap while a card is open.
+  // When it resumes it continues from where it paused rather than
+  // jumping back in phase, so icons drift out of sync over time.
+  // Restarting the animation on every icon after a card closes keeps
+  // them all ticking together.
+  function resyncPulses() {
+    document.querySelectorAll('.learn-more img').forEach(function (img) {
+      img.style.animation = 'none';
+      void img.offsetHeight; // force reflow so the restart actually takes
+      img.style.animation = '';
+    });
+  }
+
+  function openCard(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCard(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+    resyncPulses();
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeCard(overlay.id);
+    });
+  });
+</script>
+
+</body>
+</html>

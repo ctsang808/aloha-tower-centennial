@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — Fort Street</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="east-balcony.html" aria-label="Back to East Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <a class="nav-btn back-btn-overlay" href="east-balcony.html">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Go Back
+    </a>
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/east-window-1-panorama.jpg" alt="View toward Fort Street">
+        <button class="learn-more" style="top:394px; left:455px;" onclick="openCard('fort-kekuanohu-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Fort Kekuanohu">
+        </button>
+        <button class="learn-more" style="top:327px; left:473px;" onclick="openCard('fort-street-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Fort Street">
+        </button>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">Fort Street</h1>
+  </div>
+
+</div>
+
+<!-- Fort Kekuanohu card (Mauliola I) -->
+<div class="modal-overlay" id="fort-kekuanohu-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/east-window-1-card-1.jpg" alt="Historic photo of Fort Kekuanohu">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Fort Kekuanohu</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">Fort Street Mall's origins date back to the early 1800s, when Kamehameha the Great took control of a fort built by Russian fur traders after uncovering plans to take over the Kingdom of Hawaiʻi. Governor John Adams Kuakini expanded it into the largest structure in the islands, naming it Fort Kekuanohu, meaning "thorny back." When the fort was demolished in 1857, coral blocks from the building were used to extend the shoreline, which can still be seen during low tide from Pier 12.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('fort-kekuanohu-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<!-- Fort Street card (Mauliola II) -->
+<div class="modal-overlay" id="fort-street-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/east-window-1-card-2.jpg" alt="Historic photo of Fort Street">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Fort Street</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">In 1881, the first paved road was constructed in the same area, receiving the name Fort Street after Fort Kekuanohu. Today's current Fort Street Mall was created in 1968 by the Downtown Improvement Association in place of the old Fort Street in an effort to bring more business and traffic to downtown.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('fort-street-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+  // Re-sync the Learn More pulse animations. A tap pauses that one
+  // icon mid-cycle (see .learn-more:active in style.css), and on touch
+  // devices the paused state can outlast the tap while a card is open.
+  // When it resumes it continues from where it paused rather than
+  // jumping back in phase, so icons drift out of sync over time.
+  // Restarting the animation on every icon after a card closes keeps
+  // them all ticking together.
+  function resyncPulses() {
+    document.querySelectorAll('.learn-more img').forEach(function (img) {
+      img.style.animation = 'none';
+      void img.offsetHeight; // force reflow so the restart actually takes
+      img.style.animation = '';
+    });
+  }
+
+  function openCard(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCard(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+    resyncPulses();
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeCard(overlay.id);
+    });
+  });
+</script>
+
+</body>
+</html>

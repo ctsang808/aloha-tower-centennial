@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aloha Tower Centennial — Iwilei &amp; Chinatown</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="screen">
+
+  <div class="site-header">
+    <a href="north-balcony.html" aria-label="Back to North Lānai">
+      <img src="images/header.png" alt="Aloha Tower Centennial">
+    </a>
+  </div>
+
+  <div class="panorama-viewport">
+    <a class="nav-btn back-btn-overlay" href="north-balcony.html">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Go Back
+    </a>
+    <div class="panorama-scroll" id="pano-scroll">
+      <div class="panorama-track">
+        <img src="images/north-window-1-panorama.jpg" alt="View toward Iwilei and Chinatown">
+        <button class="learn-more" style="top:258px; left:108px;" onclick="openCard('iwilei-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Iwilei Stockade">
+        </button>
+        <button class="learn-more" style="top:293px; left:674px;" onclick="openCard('chinatown-card')">
+          <img src="images/icon-learn-more.png" alt="Learn more about Chinatown Historic District">
+        </button>
+      </div>
+    </div>
+    <div class="swipe-hint">
+      <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="line"></div>
+      <svg class="chevron right" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fdf6ec" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1 class="title">Iwilei &amp; Chinatown</h1>
+  </div>
+
+</div>
+
+<!-- Iwilei Stockade card -->
+<div class="modal-overlay" id="iwilei-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/north-window-1-card-1.jpg" alt="Historic photo of Iwilei Stockade">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Iwilei Stockade</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">Best known for its Costco and community college, Iwilei was once infamous as Honolulu's red-light district. In 1900, the area was home to the Iwilei Stockade, lined with rows of brothel rooms. These "boogie houses" were permitted and regulated by the government, considered a "public necessity" at the time. This system remained in place until 1917, when the operations were shut down and relocated to Chinatown.</p>
+        <p class="card-caption">Photo credit: Old Images of Hawaiʻi</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('iwilei-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<!-- Chinatown Historic District card -->
+<div class="modal-overlay" id="chinatown-card">
+  <div class="card">
+    <div class="card-photo-frame">
+      <img class="cover" src="images/north-window-1-card-2.jpg" alt="Historic photo of Chinatown Honolulu">
+    </div>
+    <div class="card-body">
+      <h2 class="card-heading">Chinatown Historic District</h2>
+      <div class="card-text-group">
+        <p class="card-paragraph">In the mid-1800s, Chinatown in Honolulu began developing as Chinese immigrants arrived to work on Oahu's sugar plantations. In 1900, during a bubonic plague outbreak, controlled burns meant to stop the spread of infection accidentally set much of the neighborhood ablaze, including the original Kaumakapili Church. The fire destroyed 38 acres, leaving most of Chinatown in ruins.</p>
+        <p class="card-caption">Photo credit: Hawaiʻi State Archives Digital Collection</p>
+      </div>
+    </div>
+  </div>
+  <button class="close-btn" onclick="closeCard('chinatown-card')" aria-label="Close">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2l12 12M14 2L2 14" stroke="#0a304a" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </button>
+</div>
+
+<script>
+  var scroller = document.getElementById('pano-scroll');
+  scroller.scrollLeft = (scroller.scrollWidth - scroller.clientWidth) / 2;
+
+  // Re-sync the Learn More pulse animations. A tap pauses that one
+  // icon mid-cycle (see .learn-more:active in style.css), and on touch
+  // devices the paused state can outlast the tap while a card is open.
+  // When it resumes it continues from where it paused rather than
+  // jumping back in phase, so icons drift out of sync over time.
+  // Restarting the animation on every icon after a card closes keeps
+  // them all ticking together.
+  function resyncPulses() {
+    document.querySelectorAll('.learn-more img').forEach(function (img) {
+      img.style.animation = 'none';
+      void img.offsetHeight; // force reflow so the restart actually takes
+      img.style.animation = '';
+    });
+  }
+
+  function openCard(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCard(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+    resyncPulses();
+  }
+  document.querySelectorAll('.modal-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeCard(overlay.id);
+    });
+  });
+</script>
+
+</body>
+</html>

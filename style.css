@@ -1,0 +1,285 @@
+:root {
+  --honolulu-harbor: #0a304a;
+  --oyster-bar: #fdf6ec;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--honolulu-harbor);
+  display: flex;
+  justify-content: center;
+  font-family: 'Mestiza', Georgia, serif; /* NOTE: licensed font, see project notes */
+}
+
+.screen {
+  width: 100%;
+  max-width: 402px;
+  min-height: 100vh;
+  background: var(--honolulu-harbor);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* ---------- SITE HEADER (logo mark, cream strip) ---------- */
+
+.site-header {
+  width: 100%;
+  height: 68px;
+  background: var(--oyster-bar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.site-header img { height: 68px; width: auto; }
+
+.site-header a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.site-header a:active img { transform: scale(0.96); }
+
+/* ---------- SWIPEABLE PANORAMA ---------- */
+
+.panorama-viewport {
+  width: 100%;
+  height: 460px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.panorama-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.panorama-scroll::-webkit-scrollbar { display: none; }
+
+.panorama-track {
+  position: relative;
+  height: 460px;
+  width: 804px; /* wider-than-viewport panorama; adjust per screen if source image differs */
+}
+
+.panorama-track img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.learn-more {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.learn-more img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: auto;
+  transform-origin: center;
+  animation: learnMorePulse 1.6s ease-in-out infinite;
+}
+.learn-more:active img { animation-play-state: paused; transform: scale(0.6); }
+
+@keyframes learnMorePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.667); }
+}
+
+.back-btn-overlay {
+  position: absolute;
+  top: 21px;
+  left: 18px;
+  z-index: 5;
+}
+
+.swipe-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  pointer-events: none;
+  z-index: 4;
+  animation: swipeHint 2.2s ease-in-out infinite;
+}
+
+.swipe-hint .line { width: 36px; height: 1px; background: var(--oyster-bar); opacity: 0.6; }
+.swipe-hint svg { opacity: 0.85; }
+
+@keyframes swipeHint {
+  0%, 100% { opacity: 0.5; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+}
+
+/* ---------- TITLE + COMPASS NAV (below panorama) ---------- */
+
+.hero {
+  padding: 40px 0 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 52px;
+  color: var(--oyster-bar);
+  text-align: center;
+  padding: 0 16px;
+}
+
+.nav-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--honolulu-harbor);
+  border: none;
+  border-radius: 36px;
+  padding: 8px 16px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--oyster-bar);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.nav-btn:active { transform: scale(0.96); background: rgba(253, 246, 236, 0.14); }
+
+.nav-btn.left { padding-left: 8px; }
+.nav-btn.right { padding-right: 8px; }
+
+.chevron { width: 24px; height: 24px; flex-shrink: 0; }
+.chevron.right { transform: scaleX(-1); }
+
+/* ---------- HISTORY CARD OVERLAY (MODAL) ---------- */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 24px;
+  z-index: 100;
+}
+
+.modal-overlay.open { display: flex; }
+
+.card {
+  width: 100%;
+  max-width: 360px;
+  height: 480px;
+  background: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0; /* sharp corners per request */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: cardIn 0.25s ease;
+}
+
+@keyframes cardIn {
+  from { transform: translateY(16px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.card-photo-frame {
+  width: 100%;
+  height: 260px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.card-photo-frame img {
+  position: absolute;
+  max-width: none;
+  display: block;
+}
+
+/* default: simple fill/cover crop, used unless a card specifies its own crop below */
+.card-photo-frame img.cover {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  background: var(--honolulu-harbor);
+  color: var(--oyster-bar);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.card-heading { font-family: 'Mestiza', Georgia, serif; font-weight: 700; font-size: 24px; }
+
+.card-text-group {
+  font-family: 'ITC Avant Garde Gothic Pro', 'Century Gothic', sans-serif; /* NOTE: licensed font, see project notes */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-paragraph { font-size: 18px; line-height: 24px; font-weight: 300; letter-spacing: 0.5px;}
+.card-caption { font-size: 14px; line-height: 18px; font-weight: 300; letter-spacing: 0.5px;}
+
+/* close button sits below the card, not overlaid on it, per the Figma file */
+.close-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 72px; /* kept circular — a distinct icon-button shape, not the card's corner treatment */
+  background: var(--oyster-bar);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.1s ease;
+}
+
+.close-btn:active { transform: scale(0.94); }
