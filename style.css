@@ -264,8 +264,8 @@ body {
   gap: 12px;
 }
 
-.card-paragraph { font-size: 18px; line-height: 24px; font-weight: 300; letter-spacing: 0.5px;}
-.card-caption { font-size: 14px; line-height: 18px; font-weight: 300; letter-spacing: 0.5px;}
+.card-paragraph { font-size: 18px; line-height: 24px; font-weight: 300; letter-spacing: 0.3px;}
+.card-caption { font-size: 14px; line-height: 18px; font-weight: 300; letter-spacing: 0.3px;}
 
 /* close button sits below the card, not overlaid on it, per the Figma file */
 .close-btn {
